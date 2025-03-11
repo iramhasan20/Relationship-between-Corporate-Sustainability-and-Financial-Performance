@@ -90,6 +90,11 @@ hausman_stat = diff.T @ np.linalg.inv(cov_diff) @ diff
 p_value_hausman = stats.chi2.sf(hausman_stat, len(diff))
 print(f'Hausman Test Statistic: {hausman_stat}, p-value: {p_value_hausman}')
 
+# Define dependent and independent variables
+y = df['FP']  # Replace with chosen financial performance variable
+X = df[['SP_INDEX', 'Control1', 'Control2', 'Control3']]  # Replace with sustainability measure and control variables
+X = sm.add_constant(X)
+
 # OLS Model with PCSE
 ols_model = sm.OLS(y, X)
 ols_results = ols_model.fit(cov_type='cluster')  # Clustered standard errors
